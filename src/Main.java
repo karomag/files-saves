@@ -31,11 +31,11 @@ public class Main {
         try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(path))) {
             for (String savePath : saveFilesPath) {
                 try (FileInputStream fis = new FileInputStream(savePath)) {
-                    ZipEntry entry = new ZipEntry(savePath);
+                    ZipEntry entry = new ZipEntry(new File(savePath).getName());
                     zout.putNextEntry(entry);
                     byte[] buffer = new byte[fis.available()];
                     fis.read(buffer);
-                    zout.write(buffer);
+                    zout.write(buffer, 0 , buffer.length);
                     zout.closeEntry();
                 } catch (FileNotFoundException e) {
                     System.out.println(e.getMessage());
